@@ -1,6 +1,4 @@
 # NPK Data Structures
-Data structures and helper macros commonly required in C projects
-
 This Single Header File can be used very easily by just including it in any of your c files. Like all Single Header Files there is no need to configure your environment, it just works! To top it off, it was designed from scratch to be simple and intuitive to use with a permissive license.
 
 Here are some examples that showcase the three data structures that this library contains (generic dynamic arrays, strings and generic maps). Have fun!
