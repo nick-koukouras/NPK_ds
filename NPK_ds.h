@@ -446,6 +446,8 @@ limitations under the License.
 #endif
 
 #if defined NPK_DS_IMPL
+    #undef NPK_DS_IMPL
+
     // ==================
     // NPK IMPLEMENTATION
     // ==================
