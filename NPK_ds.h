@@ -94,8 +94,11 @@ limitations under the License.
     // Allows us to omit declaring a variable, just to take its address
     #define NPK_rvalue_addr(type, expr) ((type []) {expr})
 
+    // Enforces parentheses with a type name as a parameter to the sizeof operator
+    #define sizeof_type(type) sizeof(const type)
+
     // A generic swap
-    #define NPK_swap(type, p1, p2) NPK_swap_(sizeof(type), p1, p2)
+    #define NPK_swap(type, p1, p2) NPK_swap_(sizeof_type(type), p1, p2)
 
     // Writes to a file all the bytes of the array
     void NPK_file_write_bytes(const char *fname, const NPK_array *arr);
@@ -121,26 +124,26 @@ limitations under the License.
     #define NPK_char_is_punct(c) ((c >= '!' && c <= '/') || (c >= ':' && c <= '@') || (c >= '[' && c <= '`') || (c >= '{' && c <= '~'))
 
     // Allocates an array with two initial elements
-    #define NPK_array_new(type) NPK_array_new_(sizeof(type))
+    #define NPK_array_new(type) NPK_array_new_(sizeof_type(type))
 
     // Allocates an array with "maxlen" initial elements
-    #define NPK_array_sized_new(type, maxlen) NPK_array_sized_new_(sizeof(type), maxlen)
+    #define NPK_array_sized_new(type, maxlen) NPK_array_sized_new_(sizeof_type(type), maxlen)
 
     // Allocates a new array that is a deep copy of "arr"
-    #define NPK_array_copy_new(type, arr) NPK_array_copy_new_(sizeof(type), arr, 1)
-    #define NPK_array_dim_copy_new(type, arr, dim) NPK_array_copy_new_(sizeof(type), arr, dim)
+    #define NPK_array_copy_new(type, arr) NPK_array_copy_new_(sizeof_type(type), arr, 1)
+    #define NPK_array_dim_copy_new(type, arr, dim) NPK_array_copy_new_(sizeof_type(type), arr, dim)
 
     // Splits an array in parts, based on a "delim" delimiter
-    #define NPK_array_split_new(type, arr, delim, eq) NPK_array_split_new_(sizeof(type), arr, NPK_rvalue_addr(type, delim), eq)
-    #define NPK_array_dim_split_new(type, arr, delim, eq, dim) NPK_array_dim_split_new_(sizeof(type), arr, delim, eq, dim)
+    #define NPK_array_split_new(type, arr, delim, eq) NPK_array_split_new_(sizeof_type(type), arr, NPK_rvalue_addr(type, delim), eq)
+    #define NPK_array_dim_split_new(type, arr, delim, eq, dim) NPK_array_dim_split_new_(sizeof_type(type), arr, delim, eq, dim)
 
     // Checks if two arrays are equal
-    #define NPK_array_equals(type, arr1, arr2, eq) NPK_array_equals_(sizeof(type), arr1, arr2, eq, 1)
-    #define NPK_array_dim_equals(type, arr1, arr2, eq, dim) NPK_array_equals_(sizeof(type), arr1, arr2, eq, dim)
+    #define NPK_array_equals(type, arr1, arr2, eq) NPK_array_equals_(sizeof_type(type), arr1, arr2, eq, 1)
+    #define NPK_array_dim_equals(type, arr1, arr2, eq, dim) NPK_array_equals_(sizeof_type(type), arr1, arr2, eq, dim)
 
     // Checks if the array contains "val"
-    #define NPK_array_contains(type, arr, val, eq) NPK_array_contains_(sizeof(type), arr, NPK_rvalue_addr(type, val), eq)
-    #define NPK_array_dim_contains(type, arr, val, eq, dim) NPK_array_dim_contains_(sizeof(type), arr, val, eq, dim)
+    #define NPK_array_contains(type, arr, val, eq) NPK_array_contains_(sizeof_type(type), arr, NPK_rvalue_addr(type, val), eq)
+    #define NPK_array_dim_contains(type, arr, val, eq, dim) NPK_array_dim_contains_(sizeof_type(type), arr, val, eq, dim)
 
     // Provides typed access to the array data
     #define NPK_array_data(type, arr) NPK_cast(type *, (arr)->data)
@@ -152,25 +155,25 @@ limitations under the License.
     #define NPK_array_length(arr) ((arr)->len + 0)
 
     // Adds to the array a shallow copy of "val"
-    #define NPK_array_add(type, arr, val) NPK_array_add_(sizeof(type), arr, NPK_rvalue_addr(type, val))
+    #define NPK_array_add(type, arr, val) NPK_array_add_(sizeof_type(type), arr, NPK_rvalue_addr(type, val))
 
     // Replaces every occurence of a "from" in the array with "to"
-    #define NPK_array_replace(type, arr, from, to, eq) NPK_array_replace_(sizeof(type), arr, NPK_rvalue_addr(type, from), NPK_rvalue_addr(type, to), eq)
-    #define NPK_array_dim_replace(type, arr, from, to, eq, dim) NPK_array_dim_replace_(sizeof(type), arr, from, to, eq, dim)
+    #define NPK_array_replace(type, arr, from, to, eq) NPK_array_replace_(sizeof_type(type), arr, NPK_rvalue_addr(type, from), NPK_rvalue_addr(type, to), eq)
+    #define NPK_array_dim_replace(type, arr, from, to, eq, dim) NPK_array_dim_replace_(sizeof_type(type), arr, from, to, eq, dim)
 
     // Sorts the array in "cmp" order
-    #define NPK_array_sort(type, arr, cmp) NPK_array_sort_(sizeof(type), arr, cmp, 1)
-    #define NPK_array_dim_sort(type, arr, cmp, dim) NPK_array_sort_(sizeof(type), arr, cmp, dim)
+    #define NPK_array_sort(type, arr, cmp) NPK_array_sort_(sizeof_type(type), arr, cmp, 1)
+    #define NPK_array_dim_sort(type, arr, cmp, dim) NPK_array_sort_(sizeof_type(type), arr, cmp, dim)
 
     // Reverses the order of the elements in the array
-    #define NPK_array_reverse(type, arr) NPK_array_reverse_(sizeof(type), arr, NPK_array_length(arr))
+    #define NPK_array_reverse(type, arr) NPK_array_reverse_(sizeof_type(type), arr, NPK_array_length(arr))
 
     // Removes the element at "idx" from the array
-    #define NPK_array_remove_at(type, arr, idx) NPK_array_remove_at_(sizeof(type), arr, idx)
+    #define NPK_array_remove_at(type, arr, idx) NPK_array_remove_at_(sizeof_type(type), arr, idx)
 
     // Removes every occurence of a "val" from the array
-    #define NPK_array_remove(type, arr, val, eq) NPK_array_remove_(sizeof(type), arr, NPK_rvalue_addr(type, val), eq)
-    #define NPK_array_dim_remove(type, arr, val, eq, dim) NPK_array_dim_remove_(sizeof(type), arr, val, eq, dim)
+    #define NPK_array_remove(type, arr, val, eq) NPK_array_remove_(sizeof_type(type), arr, NPK_rvalue_addr(type, val), eq)
+    #define NPK_array_dim_remove(type, arr, val, eq, dim) NPK_array_dim_remove_(sizeof_type(type), arr, val, eq, dim)
 
     // Deallocates the array
     #define NPK_array_del(arr) NPK_array_dim_del(arr, 1)
@@ -240,34 +243,34 @@ limitations under the License.
     #define NPK_string_del(str) NPK_array_del(str)
 
     // Allocates a map of nine initial key-value pairs
-    #define NPK_map_new(type) NPK_map_new_(sizeof(type))
+    #define NPK_map_new(type) NPK_map_new_(sizeof_type(type))
 
     // Allocates a map with "maxlen" initial key-value pairs
-    #define NPK_map_sized_new(type, maxlen) NPK_map_sized_new_(sizeof(type), maxlen)
+    #define NPK_map_sized_new(type, maxlen) NPK_map_sized_new_(sizeof_type(type), maxlen)
 
     // Allocates a new map that is a deep copy of "m"
-    #define NPK_map_copy_new(type, m) NPK_map_copy_new_(sizeof(type), m, 1)
-    #define NPK_map_dim_copy_new(type, m, dim) NPK_map_copy_new_(sizeof(type), m, dim)
+    #define NPK_map_copy_new(type, m) NPK_map_copy_new_(sizeof_type(type), m, 1)
+    #define NPK_map_dim_copy_new(type, m, dim) NPK_map_copy_new_(sizeof_type(type), m, dim)
 
     // Allocates an array with all the keys that exist in "m"
     NPK_array NPK_map_keys_new(const NPK_map *m);
 
     // Allocates an array with a deep copy of all the values that exist in "m"
-    #define NPK_map_values_new(type, m) NPK_map_values_new_(sizeof(type), m, 1)
-    #define NPK_map_dim_values_new(type, m, dim) NPK_map_values_new_(sizeof(type), m, dim)
+    #define NPK_map_values_new(type, m) NPK_map_values_new_(sizeof_type(type), m, 1)
+    #define NPK_map_dim_values_new(type, m, dim) NPK_map_values_new_(sizeof_type(type), m, dim)
 
     // Returns the value that corresponds to the key in the map
-    #define NPK_map_get(type, m, key) NPK_cast(type *, NPK_map_get_(sizeof(type), m, key))
+    #define NPK_map_get(type, m, key) NPK_cast(type *, NPK_map_get_(sizeof_type(type), m, key))
 
     // Checks if two maps are equal
-    #define NPK_map_equals(type, m1, m2, eq) NPK_map_equals_(sizeof(type), m1, m2, eq)
+    #define NPK_map_equals(type, m1, m2, eq) NPK_map_equals_(sizeof_type(type), m1, m2, eq)
 
     // Checks if the map contains the "key"
     bool NPK_map_contains_key(const NPK_map *m, const void *key);
 
     // Checks if the map contains the "val"
-    #define NPK_map_contains_value(type, m, val, eq) NPK_map_contains_value_(sizeof(type), m, NPK_rvalue_addr(type, val), eq, 1)
-    #define NPK_map_dim_contains_value(type, m, val, eq) NPK_map_contains_value_(sizeof(type), m, val, eq, dim)
+    #define NPK_map_contains_value(type, m, val, eq) NPK_map_contains_value_(sizeof_type(type), m, NPK_rvalue_addr(type, val), eq, 1)
+    #define NPK_map_dim_contains_value(type, m, val, eq) NPK_map_contains_value_(sizeof_type(type), m, val, eq, dim)
 
     // Checks if the map is empty
     #define NPK_map_is_empty(m) (NPK_map_length(m) == 0)
@@ -276,7 +279,7 @@ limitations under the License.
     #define NPK_map_length(m) (NPK_array_length(&(m)->keys))
 
     // Adds to the map a key-value pair
-    #define NPK_map_add(type, m, key, val) NPK_map_add_(sizeof(type), m, key, NPK_rvalue_addr(type, val))
+    #define NPK_map_add(type, m, key, val) NPK_map_add_(sizeof_type(type), m, key, NPK_rvalue_addr(type, val))
 
     // Removes a key-value pair from the map using "key"
     #define NPK_map_remove(m, key) NPK_map_remove_(m, key, 1)
@@ -566,7 +569,7 @@ limitations under the License.
         NPK_array part = NPK_array_new(NPK_array);
 
         NPK_count_up (i, 0, NPK_array_length(arr)) {
-            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof(NPK_array));
+            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof_type(NPK_array));
 
             if (NPK_array_equals_(size, cur, delim, type_equals, dim - 1) == false) {
                 NPK_array copy = NPK_array_copy_new_(size, cur, dim - 1);
@@ -589,8 +592,8 @@ limitations under the License.
         } else {
             NPK_count_up (i, 0, NPK_array_length(arr1)) {
                 if (dim > 1) {
-                    NPK_array *cur1 = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr1) + i * sizeof(NPK_array));
-                    NPK_array *cur2 = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr2) + i * sizeof(NPK_array));
+                    NPK_array *cur1 = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr1) + i * sizeof_type(NPK_array));
+                    NPK_array *cur2 = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr2) + i * sizeof_type(NPK_array));
 
                     if (NPK_array_equals_(size, cur1, cur2, type_equals, dim - 1) == false) {
                         return false;
@@ -623,7 +626,7 @@ limitations under the License.
 
     bool NPK_array_dim_contains_(int size, const NPK_array *arr, const void *val, bool (*type_equals)(const void *p1, const void *p2), int dim) {
         NPK_count_up (i, 0, NPK_array_length(arr)) {
-            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof(NPK_array));
+            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof_type(NPK_array));
 
             if (NPK_array_equals_(size, cur, val, type_equals, dim - 1)) {
                 return true;
@@ -657,14 +660,14 @@ limitations under the License.
 
     void NPK_array_dim_replace_(int size, NPK_array *arr, const void *from, const void *to, bool (*type_equals)(const void *p1, const void *p2), int dim) {
         NPK_count_up (i, 0, NPK_array_length(arr)) {
-            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof(NPK_array));
+            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof_type(NPK_array));
 
             if (NPK_array_equals_(size, cur, from, type_equals, dim - 1)) {
                 NPK_array_dim_del(cur, dim - 1);
 
                 NPK_array copy = NPK_array_copy_new_(size, to, dim - 1);
 
-                memcpy(cur, &copy, sizeof(NPK_array));
+                memcpy(cur, &copy, sizeof_type(NPK_array));
             }
         }
     }
@@ -672,7 +675,7 @@ limitations under the License.
     void NPK_array_sort_(int size, NPK_array *arr, int (*type_compare)(const void *p1, const void *p2), int dim) {
         NPK_count_up(i, 0, NPK_array_length(arr)) {
             if (dim > 1) {
-                NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof(NPK_array));
+                NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof_type(NPK_array));
 
                 NPK_array_sort_(size, cur, type_compare, dim - 1);
             } else {
@@ -702,22 +705,22 @@ limitations under the License.
             memcpy(cur, next, size);
         }
 
-        (arr)->len--;
+        arr->len--;
     }
 
     void NPK_array_dim_remove_at(NPK_array *arr, int idx, int dim) {
-        NPK_array *idx_loc = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + idx * sizeof(NPK_array));
+        NPK_array *idx_loc = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + idx * sizeof_type(NPK_array));
 
         NPK_array_dim_del(idx_loc, dim - 1);
 
         NPK_count_up (i, idx, NPK_array_length(arr) - 1) {
-            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof(NPK_array));
-            NPK_array *next = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + (i + 1) * sizeof(NPK_array));
+            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof_type(NPK_array));
+            NPK_array *next = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + (i + 1) * sizeof_type(NPK_array));
 
-            memcpy(cur, next, sizeof(NPK_array));
+            memcpy(cur, next, sizeof_type(NPK_array));
         }
 
-        (arr)->len--;
+        arr->len--;
     }
 
     void NPK_array_remove_(int size, NPK_array *arr, const void *val, bool (*type_equals)(const void *p1, const void *p2)) {
@@ -733,7 +736,7 @@ limitations under the License.
 
     void NPK_array_dim_remove_(int size, NPK_array *arr, const void *val, bool (*type_equals)(const void *p1, const void *p2), int dim) {
         NPK_count_up (i, 0, NPK_array_length(arr)) {
-            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof(NPK_array));
+            NPK_array *cur = NPK_cast(NPK_array *, NPK_array_data(uint8_t, arr) + i * sizeof_type(NPK_array));
 
             if (NPK_array_equals_(size, cur, val, type_equals, dim - 1)) {
                 NPK_array_dim_remove_at(arr, i, dim);
@@ -871,7 +874,7 @@ limitations under the License.
 
         m.keys = NPK_array_sized_new(void *, maxlen);
         m.values = NPK_array_sized_new_(size, maxlen);
-        memset(m.keys.data, 0, maxlen * sizeof(void *));
+        memset(m.keys.data, 0, maxlen * sizeof_type(void *));
 
         return m;
     }
