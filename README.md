@@ -512,4 +512,4 @@ int main(int argc, char **argv) {
 ```
 I think these 6 examples are more than enough, hopefully you didn't loose track along the way. If you have any previous experience with C++ classes, these examples should look awefully too familiar with all the constructors and destructors you had to create. For more details you should probably look into the source code, I tried to keep it small and simple, so you should probably find what you are looking for.
 
-Lastly, I didn't mention in my examples the NPK\_cast, NPK\_rvalue\_addr, NPK\_sizeof\_type, NPK\_sizeof\_member, NPK\_swap and the NPK\_char\_\* macros along with the 4 NPK\_file\_\* and all the (from and to) string conversion functions which are super usefull. So if you take a deep dive, start from there! That's it from me, I hope you find my little library usefull!
+Lastly, I didn't mention in my examples the NPK\_cast, NPK\_rvalue\_addr, NPK\_sizeof\_type, NPK\_sizeof\_member, NPK\_swap and the NPK\_char\_\* macros along with the 4 NPK\_file\_\* and all the (from and to) string conversion functions. So if you take a deep dive, take look at them too! That's it from me, I hope you find my little library useful!
